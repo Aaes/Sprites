@@ -17,4 +17,4 @@ The project uses Typescript so if you want to extend it, you can
 <br/>
 <a href="https://github.com/markuszeller/avatarro">Avatarro</a>
 <br/>
-<a href="https://github.com/markuszeller/avatarro">Iamtheonlymeiknow</a>
+<a href="https://imgur.com/gallery/QJjdAPh">Iamtheonlymeiknow</a>
