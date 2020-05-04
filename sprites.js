@@ -1,3 +1,40 @@
+var CellularAutomataUtilty = (function () {
+    function CellularAutomataUtilty() {
+    }
+    CellularAutomataUtilty.countNeighboursWithState = function (neighbours, state) {
+        var numberOfNeighboursWithState = 0;
+        for (var i = 0; i < neighbours.length; i++) {
+            if (neighbours[i] == state)
+                numberOfNeighboursWithState++;
+        }
+        return numberOfNeighboursWithState;
+    };
+    CellularAutomataUtilty.getNeighbours = function (sprite, i, j) {
+        var neighbours = [];
+        if (i > 0)
+            neighbours.push(sprite[i - 1][j]);
+        if (i < sprite.length - 1)
+            neighbours.push(sprite[i + 1][j]);
+        if (j > 0)
+            neighbours.push(sprite[i][j - 1]);
+        if (j < sprite.length - 1)
+            neighbours.push(sprite[i][j + 1]);
+        return neighbours;
+    };
+    CellularAutomataUtilty.getDiagonalNeighbours = function (sprite, i, j) {
+        var neighbours = [];
+        if (i > 0 && j > 0)
+            neighbours.push(sprite[i - 1][j - 1]);
+        if (j > 0 && i < sprite.length - 1)
+            neighbours.push(sprite[i + 1][j - 1]);
+        if (j > 0 && i < sprite.length - 1)
+            neighbours.push(sprite[i + 1][j - 1]);
+        if (i < sprite.length - 1 && j < sprite.length - 1)
+            neighbours.push(sprite[i + 1][j + 1]);
+        return neighbours;
+    };
+    return CellularAutomataUtilty;
+}());
 var Drawing = (function () {
     function Drawing() {
     }
@@ -102,17 +139,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
     Start.generateSprites(10, "noise-with-outline-sprites-50p", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }); });
     Start.generateSprites(10, "noise-with-outline-sprites-25p", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
     Start.generateSprites(10, "noise-with-outline-sprites-10p", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 10); }); });
-    Start.generateSprites(10, "cellular-automata-2-50p", function () { return CellularAutomataGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }); });
-    Start.generateSprites(10, "cellular-automata-5-50p", function () { return CellularAutomataGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }, 5); });
-    Start.generateSprites(10, "cellular-automata-2-25p", function () { return CellularAutomataGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
-    Start.generateSprites(10, "cellular-automata-5-25p", function () { return CellularAutomataGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); });
-    Start.generateSprites(10, "cellular-automata-2-25p-outline", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); }); });
-    Start.generateSprites(10, "cellular-automata-5-25p-outline", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); }); });
+    Start.generateSprites(10, "cellular-automata-1-2gen-50p", function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }); });
+    Start.generateSprites(10, "cellular-automata-1-5gen-50p", function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }, 5); });
+    Start.generateSprites(10, "cellular-automata-1-2gen-25p", function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
+    Start.generateSprites(10, "cellular-automata-1-5gen-25p", function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); });
+    Start.generateSprites(10, "cellular-automata-1-2gen-25p-outline", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); }); });
+    Start.generateSprites(10, "cellular-automata-1-5gen-25p-outline", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); }); });
+    Start.generateSprites(10, "cellular-automata-2-2gen-50p", function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
+    Start.generateSprites(10, "cellular-automata-2-5gen-50p", function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); });
+    Start.generateSprites(10, "cellular-automata-2-2gen-25p", function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
+    Start.generateSprites(10, "cellular-automata-2-5gen-25p", function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); });
+    Start.generateSprites(10, "cellular-automata-2-2gen-25p-outline", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); }); });
+    Start.generateSprites(10, "cellular-automata-2-5gen-25p-outline", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); }); });
     var randomAliveChange = Math.floor(Math.random() * 100);
     var randomGenerations = Math.floor(Math.random() * 50);
-    console.log(randomAliveChange);
-    console.log(randomGenerations);
-    Start.generateSprites(10, "cellular-automata-random", function () { return CellularAutomataGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, randomAliveChange); }, randomGenerations); });
+    Start.generateSprites(10, "cellular-automata-1-random", function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, randomAliveChange); }, randomGenerations); });
+    Start.generateSprites(10, "cellular-automata-2-random", function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, randomAliveChange); }, randomGenerations); });
 });
 var Utility = (function () {
     function Utility() {
@@ -136,17 +178,23 @@ var Utility = (function () {
     };
     return Utility;
 }());
-var CellularAutomataGenerator = (function () {
-    function CellularAutomataGenerator() {
+var CELLSTATE;
+(function (CELLSTATE) {
+    CELLSTATE[CELLSTATE["ALIVE"] = 0] = "ALIVE";
+    CELLSTATE[CELLSTATE["DEAD"] = 1] = "DEAD";
+    CELLSTATE[CELLSTATE["OUTLINE"] = 2] = "OUTLINE";
+})(CELLSTATE || (CELLSTATE = {}));
+var CellularAutomataGenerator1 = (function () {
+    function CellularAutomataGenerator1() {
     }
-    CellularAutomataGenerator.generateSprite = function (spriteSize, spriteGenerator, generations) {
+    CellularAutomataGenerator1.generateSprite = function (spriteSize, spriteGenerator, generations) {
         if (generations === void 0) { generations = 2; }
         var sprite = spriteGenerator(spriteSize);
         for (var g = 0; g < generations; g++) {
             for (var i = 0; i < sprite.length; i++) {
                 for (var j = 0; j < sprite.length; j++) {
-                    var neighbours = this.getNeighbours(sprite, i, j);
-                    var liveNeighbours = this.countNeighboursWithState(neighbours, CELLSTATE.ALIVE);
+                    var neighbours = CellularAutomataUtilty.getNeighbours(sprite, i, j);
+                    var liveNeighbours = CellularAutomataUtilty.countNeighboursWithState(neighbours, CELLSTATE.ALIVE);
                     if (sprite[i][j] == CELLSTATE.ALIVE && (neighbours.length == 2 || neighbours.length == 3))
                         continue;
                     if (sprite[i][j] == CELLSTATE.DEAD && liveNeighbours < 2) {
@@ -160,27 +208,35 @@ var CellularAutomataGenerator = (function () {
         }
         return sprite;
     };
-    CellularAutomataGenerator.countNeighboursWithState = function (neighbours, state) {
-        var numberOfNeighboursWithState = 0;
-        for (var i = 0; i < neighbours.length; i++) {
-            if (neighbours[i] == state)
-                numberOfNeighboursWithState++;
+    return CellularAutomataGenerator1;
+}());
+var CellularAutomataGenerator2 = (function () {
+    function CellularAutomataGenerator2() {
+    }
+    CellularAutomataGenerator2.generateSprite = function (spriteSize, spriteGenerator, generations) {
+        if (generations === void 0) { generations = 2; }
+        var sprite = spriteGenerator(spriteSize);
+        for (var g = 0; g < generations; g++) {
+            for (var i = 0; i < sprite.length; i++) {
+                for (var j = 0; j < sprite.length; j++) {
+                    var neighbours = CellularAutomataUtilty.getNeighbours(sprite, i, j);
+                    var liveNeighbours = CellularAutomataUtilty.countNeighboursWithState(neighbours, CELLSTATE.ALIVE);
+                    var diagonalNeighbours = CellularAutomataUtilty.getDiagonalNeighbours(sprite, i, j);
+                    var liveDiagonalNeighbours = CellularAutomataUtilty.countNeighboursWithState(diagonalNeighbours, CELLSTATE.ALIVE);
+                    if (sprite[i][j] == CELLSTATE.ALIVE && (liveDiagonalNeighbours == 2 || liveDiagonalNeighbours == 3))
+                        continue;
+                    if (sprite[i][j] == CELLSTATE.DEAD && liveDiagonalNeighbours > 0) {
+                        sprite[i][j] = CELLSTATE.ALIVE;
+                        continue;
+                    }
+                    if (sprite[i][j] == CELLSTATE.ALIVE)
+                        sprite[i][j] = CELLSTATE.DEAD;
+                }
+            }
         }
-        return numberOfNeighboursWithState;
+        return sprite;
     };
-    CellularAutomataGenerator.getNeighbours = function (sprite, i, j) {
-        var neighbours = [];
-        if (i > 0)
-            neighbours.push(sprite[i - 1][j]);
-        if (i < sprite.length - 1)
-            neighbours.push(sprite[i + 1][j]);
-        if (j > 0)
-            neighbours.push(sprite[i][j - 1]);
-        if (j < sprite.length - 1)
-            neighbours.push(sprite[i][j + 1]);
-        return neighbours;
-    };
-    return CellularAutomataGenerator;
+    return CellularAutomataGenerator2;
 }());
 var NoiseGenerator = (function () {
     function NoiseGenerator() {
@@ -291,10 +347,4 @@ var TestData = (function () {
     };
     return TestData;
 }());
-var CELLSTATE;
-(function (CELLSTATE) {
-    CELLSTATE[CELLSTATE["ALIVE"] = 0] = "ALIVE";
-    CELLSTATE[CELLSTATE["DEAD"] = 1] = "DEAD";
-    CELLSTATE[CELLSTATE["OUTLINE"] = 2] = "OUTLINE";
-})(CELLSTATE || (CELLSTATE = {}));
 //# sourceMappingURL=sprites.js.map

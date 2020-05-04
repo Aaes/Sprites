@@ -2,7 +2,11 @@
 
 Generation and rending of retro style sprites with different apporaches. A fun little hobby project.
 
-![alt text](./Sprites.png "Logo Title Text 1")
+![alt text](./Images/JustNoise.png "Just noise")
+![alt text](./Images/NoiseWithOutline.png "Noise with outline")
+![alt text](./Images/CellularAutomaton1.png "Cellular Automation 1")
+![alt text](./Images/CellularAutomaton2.png "Cellular Automation 2")
+![alt text](./Images/CellularAutomatonRandom.png "Cellular Automation random")
 
 ## Usage
 Clone the repository and open the "sprites.html" file.
