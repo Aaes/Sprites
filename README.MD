@@ -1,6 +1,6 @@
 ## Sprite generation
 
-Generation and rending of retro style sprites with different apporaches. A fun little hobby project.
+Generation and rending of retro style sprites with different approaches. A fun little hobby project.
 
 ![alt text](./Images/JustNoise.png "Just noise")
 ![alt text](./Images/NoiseWithOutline.png "Noise with outline")
