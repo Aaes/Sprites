@@ -4,6 +4,7 @@ class Drawing {
         canvas: HTMLCanvasElement, 
         addShadow: boolean, 
         addGradient: boolean,
+        drawAsDots: boolean,
         spriteSize: number, 
         color?: string): void {
         
@@ -27,10 +28,10 @@ class Drawing {
         for (let i = 0; i < sprite.length; i++) {
             for (let j = 0; j < sprite.length; j++) {
                 if(sprite[i][j] == CELLSTATE.ALIVE) {
-                    Drawing.drawNormalSquare(ctx, i, j, spriteSize, aliveColor, aliveColorTop, aliveColorLeft, addShadow, addGradient)
+                    Drawing.drawNormalSquare(ctx, i, j, spriteSize, aliveColor, aliveColorTop, aliveColorLeft, addShadow, addGradient, drawAsDots)
                 }
                 if(sprite[i][j] == CELLSTATE.OUTLINE) {
-                    Drawing.drawOutlineSquare(ctx, i, j, spriteSize, outlineColor, outlineColorTop, outlineColorLeft, addGradient)
+                    Drawing.drawOutlineSquare(ctx, i, j, spriteSize, outlineColor, outlineColorTop, outlineColorLeft, addGradient, drawAsDots)
                 }
             }
         }
@@ -45,7 +46,8 @@ class Drawing {
         aliveColorTop: string,
         aliveColorLeft: string,
         addShadow: boolean,
-        addGradient: boolean){
+        addGradient: boolean,
+        drawAsDots: boolean){
 
         if(addGradient)
             ctx.fillStyle = this.adjust(aliveColor, i*-20);
@@ -55,7 +57,15 @@ class Drawing {
         let inset = spriteSize * 0.2
 
         // Fill color
-        ctx.fillRect(i*spriteSize, j*spriteSize, spriteSize, spriteSize); 
+        if(drawAsDots) {
+            for (let drawStepX = 0; drawStepX < spriteSize; drawStepX = drawStepX + 2) {
+                for (let drawStepY = 0; drawStepY < spriteSize; drawStepY = drawStepY + 2) {
+                    ctx.fillRect(i*spriteSize+drawStepX, j*spriteSize+drawStepY, 1, 1);
+                }
+            }
+        }
+        else
+            ctx.fillRect(i*spriteSize, j*spriteSize, spriteSize, spriteSize); 
 
         // Fill top
         ctx.fillStyle = aliveColorTop;
@@ -108,7 +118,8 @@ class Drawing {
         outlineColor: string, 
         outlineColorTop: string, 
         outlineColorLeft: string,
-        addGradient: boolean) {
+        addGradient: boolean,
+        drawAsDots: boolean) {
 
         let inset = spriteSize * 0.2
         if(addGradient)        
@@ -117,6 +128,14 @@ class Drawing {
             ctx.fillStyle = outlineColor;
 
         // Fill color
+         if(drawAsDots) {
+            for (let drawStepX = 0; drawStepX < spriteSize; drawStepX = drawStepX + 2) {
+                for (let drawStepY = 0; drawStepY < spriteSize; drawStepY = drawStepY + 2) {
+                    ctx.fillRect(i*spriteSize+drawStepX, j*spriteSize+drawStepY, 1, 1);
+                }
+            }
+        }
+        else
         ctx.fillRect(i*spriteSize, j*spriteSize, spriteSize, spriteSize); 
 
         // Fill top        

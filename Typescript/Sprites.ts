@@ -5,7 +5,8 @@ class Start {
                 spriteAmount: number, 
                 spriteSize: number,                 
                 addShadow: boolean,
-                addGradient: boolean
+                addGradient: boolean,
+                drawAsDots: boolean
             }, 
             containerId: string,
             spriteGeneratorFunction: (() => CELLSTATE[][])) {
@@ -23,24 +24,26 @@ class Start {
             let sprite = spriteGeneratorFunction();
 
             // Draw the sprite
-            Drawing.drawSprite(sprite, spriteContainer, renderOptions.addShadow,  renderOptions.addGradient, renderOptions.spriteSize, rowColor);
+            Drawing.drawSprite(sprite, spriteContainer, renderOptions.addShadow, renderOptions.addGradient, renderOptions.drawAsDots, renderOptions.spriteSize, rowColor);
         }               
     } 
 
     public static renderWithOptions() {
         let addShadowCheckbox = <HTMLInputElement> document.getElementById('add-shadow-checkbox');
         let addGradientCheckbox = <HTMLInputElement> document.getElementById('add-gradient-checkbox');
-        Start.generateAndRenderSprites(addShadowCheckbox.checked, addGradientCheckbox.checked)
+        let drawAsDotsCheckbox = <HTMLInputElement> document.getElementById('draw-as-dots-checkbox');
+        Start.generateAndRenderSprites(addShadowCheckbox.checked, addGradientCheckbox.checked, drawAsDotsCheckbox.checked)
     }
 
-    public static generateAndRenderSprites(addShadow: boolean, addGradient: boolean) {
+    public static generateAndRenderSprites(addShadow: boolean, addGradient: boolean, drawAsDots: boolean) {
         let spriteSize = 8;
         let spriteAmount = 10
         let renderOptions = {
             spriteAmount,
             spriteSize,
             addShadow,
-            addGradient
+            addGradient,
+            drawAsDots
         }
 
         // Just noise
@@ -87,5 +90,5 @@ class Start {
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {   
-    Start.generateAndRenderSprites(false, false)
+    Start.generateAndRenderSprites(false, false, false)
 });
