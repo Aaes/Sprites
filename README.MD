@@ -18,6 +18,14 @@ The project uses Typescript so if you want to extend it, you can
 - open the project folder and run "tsc -b" (use "tsc -w" for watch mode)
 - open the sprites.html file
 
+## Further improvements
+- Better explanations of the methods used
+- Experimentation with different randomness algorithms
+- Experimentation with more cellular automata
+- UI for tweaking the alive cell change, generation count and sprite size
+- UI for seleting whether to render with an outline
+- Separate rendering from the generation so that selecting checkboxes doesn't trigger regeneration
+
 ## Based on ideas by
 
 <a href="https://github.com/yurkth/sprator">Yurkth</a>
