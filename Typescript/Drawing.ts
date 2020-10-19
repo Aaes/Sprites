@@ -1,7 +1,7 @@
 class Drawing {
-    public static drawSprite(sprite: Array<Array<CELLSTATE>>, canvas: HTMLCanvasElement, color?: string): void {
+    public static drawSprite(sprite: Array<Array<CELLSTATE>>, canvas: HTMLCanvasElement, addShadow: boolean, color?: string): void {
         let ctx = canvas.getContext("2d");
-        let aliveColor: string;        
+        let aliveColor: string;       
 
         if(color) {
             aliveColor = color;
@@ -20,58 +20,102 @@ class Drawing {
         for (let i = 0; i < sprite.length; i++) {
             for (let j = 0; j < sprite.length; j++) {
                 if(sprite[i][j] == CELLSTATE.ALIVE) {
-                    ctx.fillStyle = aliveColor;
-
-                    // Fill color
-                    ctx.fillRect(i*8, j*8, 8, 8); 
-
-                    // Fill top
-                    ctx.fillStyle = aliveColorTop;
-                    ctx.beginPath();
-                    ctx.moveTo(i*8, j*8);
-                    ctx.lineTo(i*8+1, j*8+2);
-                    ctx.lineTo(i*8+6, j*8+2);
-                    ctx.lineTo(i*8+8, j*8);
-                    ctx.closePath();
-                    ctx.fill();
-
-                    // Fill left
-                    ctx.fillStyle = aliveColorLeft;
-                    ctx.beginPath();
-                    ctx.moveTo(i*8, j*8);
-                    ctx.lineTo(i*8+2, j*8+1);
-                    ctx.lineTo(i*8+2, j*8+6);
-                    ctx.lineTo(i*8, j*8+8);
-                    ctx.closePath();
-                    ctx.fill();
+                    Drawing.drawNormalSquare(ctx, i, j, aliveColor, aliveColorTop, aliveColorLeft, addShadow)
                 }
                 if(sprite[i][j] == CELLSTATE.OUTLINE) {
-                    ctx.fillStyle = outlineColor;
-                    // Fill color
-                    ctx.fillRect(i*8, j*8, 8, 8); 
-
-                    // Fill top
-                    ctx.fillStyle = outlineColorTop;
-                    ctx.beginPath();
-                    ctx.moveTo(i*8, j*8);
-                    ctx.lineTo(i*8+1, j*8+2);
-                    ctx.lineTo(i*8+6, j*8+2);
-                    ctx.lineTo(i*8+8, j*8);
-                    ctx.closePath();
-                    ctx.fill();
-
-                    // Fill left
-                    ctx.fillStyle = outlineColorLeft;
-                    ctx.beginPath();
-                    ctx.moveTo(i*8, j*8);
-                    ctx.lineTo(i*8+2, j*8+1);
-                    ctx.lineTo(i*8+2, j*8+6);
-                    ctx.lineTo(i*8, j*8+8);
-                    ctx.closePath();
-                    ctx.fill();
+                    Drawing.drawOutlineSquare(ctx, i, j, outlineColor, outlineColorTop, outlineColorLeft)
                 }
             }
         }
+    }
+
+    public static drawNormalSquare( 
+        ctx: CanvasRenderingContext2D, 
+        i: number, 
+        j: number, 
+        aliveColor: string,
+        aliveColorTop: string,
+        aliveColorLeft: string,
+        addShadow: boolean){
+        ctx.fillStyle = aliveColor;
+
+        // Fill color
+        ctx.fillRect(i*8, j*8, 8, 8); 
+
+        // Fill top
+        ctx.fillStyle = aliveColorTop;
+        ctx.beginPath();
+        ctx.moveTo(i*8, j*8);
+        ctx.lineTo(i*8+1, j*8+2);
+        ctx.lineTo(i*8+6, j*8+2);
+        ctx.lineTo(i*8+8, j*8);
+        ctx.closePath();
+        ctx.fill();
+
+        // Fill left
+        ctx.fillStyle = aliveColorLeft;
+        ctx.beginPath();
+        ctx.moveTo(i*8, j*8);
+        ctx.lineTo(i*8+2, j*8+1);
+        ctx.lineTo(i*8+2, j*8+6);
+        ctx.lineTo(i*8, j*8+8);
+        ctx.closePath();
+        ctx.fill();
+
+        if(addShadow) {
+            // Fill shadow top        
+            ctx.fillStyle = '#000000';
+            ctx.beginPath();
+            ctx.moveTo(i*8, j*8);
+            ctx.lineTo(i*8-3, j*8-2);
+            ctx.lineTo(i*8+5, j*8-2);
+            ctx.lineTo(i*8+8, j*8);
+            ctx.closePath();
+            ctx.fill();        
+
+            // Fill shadow left        
+            ctx.fillStyle = '#666666';
+            ctx.beginPath();
+            ctx.moveTo(i*8, j*8);
+            ctx.lineTo(i*8-3, j*8-2);
+            ctx.lineTo(i*8-3, j*8+6);
+            ctx.lineTo(i*8, j*8+8);
+            ctx.closePath();
+            ctx.fill();
+        }
+    }
+
+    public static drawOutlineSquare(
+        ctx: CanvasRenderingContext2D, 
+        i: number, 
+        j: number, 
+        outlineColor: string, 
+        outlineColorTop: string, 
+        outlineColorLeft: string) {
+
+        ctx.fillStyle = outlineColor;
+        // Fill color
+        ctx.fillRect(i*8, j*8, 8, 8); 
+
+        // Fill top        
+        ctx.fillStyle = outlineColorTop;
+        ctx.beginPath();
+        ctx.moveTo(i*8, j*8);
+        ctx.lineTo(i*8+1, j*8+2);
+        ctx.lineTo(i*8+6, j*8+2);
+        ctx.lineTo(i*8+8, j*8);
+        ctx.closePath();
+        ctx.fill();
+
+        // Fill left
+        ctx.fillStyle = outlineColorLeft;
+        ctx.beginPath();
+        ctx.moveTo(i*8, j*8);
+        ctx.lineTo(i*8+2, j*8+1);
+        ctx.lineTo(i*8+2, j*8+6);
+        ctx.lineTo(i*8, j*8+8);
+        ctx.closePath();
+        ctx.fill();
     }
 
     public static generateCanvas(): HTMLCanvasElement {

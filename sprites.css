@@ -7,13 +7,13 @@ body {
 }
 
 .container {
-    margin:100px;
+    margin:150px;
     min-width: 850px;
     white-space: nowrap;
 }
 
 .row {
-    height: 50px;
+    height: 64px;
     margin-bottom: 35px;
 }
 
