@@ -1,5 +1,5 @@
 class Drawing {
-    public static drawSprite(sprite: Array<Array<CELLSTATE>>, canvas: HTMLCanvasElement, addShadow: boolean, color?: string): void {
+    public static drawSprite(sprite: Array<Array<CELLSTATE>>, canvas: HTMLCanvasElement, addShadow: boolean, spriteSize: number, color?: string): void {
         let ctx = canvas.getContext("2d");
         let aliveColor: string;       
 
@@ -20,10 +20,10 @@ class Drawing {
         for (let i = 0; i < sprite.length; i++) {
             for (let j = 0; j < sprite.length; j++) {
                 if(sprite[i][j] == CELLSTATE.ALIVE) {
-                    Drawing.drawNormalSquare(ctx, i, j, aliveColor, aliveColorTop, aliveColorLeft, addShadow)
+                    Drawing.drawNormalSquare(ctx, i, j, spriteSize, aliveColor, aliveColorTop, aliveColorLeft, addShadow)
                 }
                 if(sprite[i][j] == CELLSTATE.OUTLINE) {
-                    Drawing.drawOutlineSquare(ctx, i, j, outlineColor, outlineColorTop, outlineColorLeft)
+                    Drawing.drawOutlineSquare(ctx, i, j, spriteSize, outlineColor, outlineColorTop, outlineColorLeft)
                 }
             }
         }
@@ -33,32 +33,35 @@ class Drawing {
         ctx: CanvasRenderingContext2D, 
         i: number, 
         j: number, 
+        spriteSize: number,
         aliveColor: string,
         aliveColorTop: string,
         aliveColorLeft: string,
         addShadow: boolean){
         ctx.fillStyle = aliveColor;
 
+        let inset = spriteSize * 0.2
+
         // Fill color
-        ctx.fillRect(i*8, j*8, 8, 8); 
+        ctx.fillRect(i*spriteSize, j*spriteSize, spriteSize, spriteSize); 
 
         // Fill top
         ctx.fillStyle = aliveColorTop;
         ctx.beginPath();
-        ctx.moveTo(i*8, j*8);
-        ctx.lineTo(i*8+1, j*8+2);
-        ctx.lineTo(i*8+6, j*8+2);
-        ctx.lineTo(i*8+8, j*8);
+        ctx.moveTo(i*spriteSize, j*spriteSize);
+        ctx.lineTo(i*spriteSize+(inset/2), j*spriteSize+inset);
+        ctx.lineTo(i*spriteSize+(spriteSize-inset), j*spriteSize+inset);
+        ctx.lineTo(i*spriteSize+spriteSize, j*spriteSize);
         ctx.closePath();
         ctx.fill();
 
         // Fill left
         ctx.fillStyle = aliveColorLeft;
         ctx.beginPath();
-        ctx.moveTo(i*8, j*8);
-        ctx.lineTo(i*8+2, j*8+1);
-        ctx.lineTo(i*8+2, j*8+6);
-        ctx.lineTo(i*8, j*8+8);
+        ctx.moveTo(i*spriteSize, j*spriteSize);
+        ctx.lineTo(i*spriteSize+inset, j*spriteSize+(inset/2));
+        ctx.lineTo(i*spriteSize+inset, j*spriteSize+(spriteSize-inset));
+        ctx.lineTo(i*spriteSize, j*spriteSize+spriteSize);
         ctx.closePath();
         ctx.fill();
 
@@ -66,20 +69,20 @@ class Drawing {
             // Fill shadow top        
             ctx.fillStyle = '#000000';
             ctx.beginPath();
-            ctx.moveTo(i*8, j*8);
-            ctx.lineTo(i*8-3, j*8-2);
-            ctx.lineTo(i*8+5, j*8-2);
-            ctx.lineTo(i*8+8, j*8);
+            ctx.moveTo(i*spriteSize, j*spriteSize);
+            ctx.lineTo(i*spriteSize-inset, j*spriteSize-inset);
+            ctx.lineTo(i*spriteSize+(spriteSize-inset), j*spriteSize-inset);
+            ctx.lineTo(i*spriteSize+spriteSize, j*spriteSize);
             ctx.closePath();
             ctx.fill();        
 
             // Fill shadow left        
             ctx.fillStyle = '#666666';
             ctx.beginPath();
-            ctx.moveTo(i*8, j*8);
-            ctx.lineTo(i*8-3, j*8-2);
-            ctx.lineTo(i*8-3, j*8+6);
-            ctx.lineTo(i*8, j*8+8);
+            ctx.moveTo(i*spriteSize, j*spriteSize);
+            ctx.lineTo(i*spriteSize-inset, j*spriteSize-inset);
+            ctx.lineTo(i*spriteSize-inset, j*spriteSize+(spriteSize-inset));
+            ctx.lineTo(i*spriteSize, j*spriteSize+spriteSize);
             ctx.closePath();
             ctx.fill();
         }
@@ -89,40 +92,43 @@ class Drawing {
         ctx: CanvasRenderingContext2D, 
         i: number, 
         j: number, 
+        spriteSize: number,
         outlineColor: string, 
         outlineColorTop: string, 
         outlineColorLeft: string) {
 
+        let inset = spriteSize * 0.2
         ctx.fillStyle = outlineColor;
+
         // Fill color
-        ctx.fillRect(i*8, j*8, 8, 8); 
+        ctx.fillRect(i*spriteSize, j*spriteSize, spriteSize, spriteSize); 
 
         // Fill top        
         ctx.fillStyle = outlineColorTop;
         ctx.beginPath();
-        ctx.moveTo(i*8, j*8);
-        ctx.lineTo(i*8+1, j*8+2);
-        ctx.lineTo(i*8+6, j*8+2);
-        ctx.lineTo(i*8+8, j*8);
+        ctx.moveTo(i*spriteSize, j*spriteSize);
+        ctx.lineTo(i*spriteSize+(inset/2), j*spriteSize+inset);
+        ctx.lineTo(i*spriteSize+(spriteSize-inset), j*spriteSize+inset);
+        ctx.lineTo(i*spriteSize+spriteSize, j*spriteSize);
         ctx.closePath();
         ctx.fill();
 
         // Fill left
         ctx.fillStyle = outlineColorLeft;
         ctx.beginPath();
-        ctx.moveTo(i*8, j*8);
-        ctx.lineTo(i*8+2, j*8+1);
-        ctx.lineTo(i*8+2, j*8+6);
-        ctx.lineTo(i*8, j*8+8);
+        ctx.moveTo(i*spriteSize, j*spriteSize);
+        ctx.lineTo(i*spriteSize+inset, j*spriteSize+(inset/2));
+        ctx.lineTo(i*spriteSize+inset, j*spriteSize+(spriteSize-inset));
+        ctx.lineTo(i*spriteSize, j*spriteSize+spriteSize);
         ctx.closePath();
         ctx.fill();
     }
 
-    public static generateCanvas(): HTMLCanvasElement {
+    public static generateCanvas(spriteSize: number): HTMLCanvasElement {
         let spriteContainer = document.createElement("canvas");
         spriteContainer.classList.add("sprite");
-        spriteContainer.width = 64;
-        spriteContainer.height = 64;
+        spriteContainer.width = spriteSize*spriteSize;
+        spriteContainer.height = spriteSize*spriteSize;
         return spriteContainer;
     }
 

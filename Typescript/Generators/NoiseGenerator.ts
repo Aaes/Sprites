@@ -1,6 +1,6 @@
 class NoiseGenerator {
     public static generateSprite(spriteSize: number, chanceForAliveCell: number = 50): CELLSTATE[][] {
-        // Generate 4*8 grid of noise
+        // Generate spriteSize/2*spriteSize grid of noise
         let halfSprite: Array<Array<CELLSTATE>> = new Array<Array<CELLSTATE>>(spriteSize/2);
         
         for (let i = 0; i < halfSprite.length; i++) {
@@ -10,8 +10,8 @@ class NoiseGenerator {
             }            
         }
 
-        // Mirror the output to create an 8*8 grid
-        let sprite: Array<Array<CELLSTATE>> = new Array<Array<CELLSTATE>>(8);
+        // Mirror the output to create an spriteSize*spriteSize grid
+        let sprite: Array<Array<CELLSTATE>> = new Array<Array<CELLSTATE>>(spriteSize);
 
         // Copy the half sprite
         for (let i = 0; i < halfSprite.length; i++) {

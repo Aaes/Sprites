@@ -38,7 +38,7 @@ var CellularAutomataUtilty = (function () {
 var Drawing = (function () {
     function Drawing() {
     }
-    Drawing.drawSprite = function (sprite, canvas, addShadow, color) {
+    Drawing.drawSprite = function (sprite, canvas, addShadow, spriteSize, color) {
         var ctx = canvas.getContext("2d");
         var aliveColor;
         if (color) {
@@ -55,77 +55,79 @@ var Drawing = (function () {
         for (var i = 0; i < sprite.length; i++) {
             for (var j = 0; j < sprite.length; j++) {
                 if (sprite[i][j] == CELLSTATE.ALIVE) {
-                    Drawing.drawNormalSquare(ctx, i, j, aliveColor, aliveColorTop, aliveColorLeft, addShadow);
+                    Drawing.drawNormalSquare(ctx, i, j, spriteSize, aliveColor, aliveColorTop, aliveColorLeft, addShadow);
                 }
                 if (sprite[i][j] == CELLSTATE.OUTLINE) {
-                    Drawing.drawOutlineSquare(ctx, i, j, outlineColor, outlineColorTop, outlineColorLeft);
+                    Drawing.drawOutlineSquare(ctx, i, j, spriteSize, outlineColor, outlineColorTop, outlineColorLeft);
                 }
             }
         }
     };
-    Drawing.drawNormalSquare = function (ctx, i, j, aliveColor, aliveColorTop, aliveColorLeft, addShadow) {
+    Drawing.drawNormalSquare = function (ctx, i, j, spriteSize, aliveColor, aliveColorTop, aliveColorLeft, addShadow) {
         ctx.fillStyle = aliveColor;
-        ctx.fillRect(i * 8, j * 8, 8, 8);
+        var inset = spriteSize * 0.2;
+        ctx.fillRect(i * spriteSize, j * spriteSize, spriteSize, spriteSize);
         ctx.fillStyle = aliveColorTop;
         ctx.beginPath();
-        ctx.moveTo(i * 8, j * 8);
-        ctx.lineTo(i * 8 + 1, j * 8 + 2);
-        ctx.lineTo(i * 8 + 6, j * 8 + 2);
-        ctx.lineTo(i * 8 + 8, j * 8);
+        ctx.moveTo(i * spriteSize, j * spriteSize);
+        ctx.lineTo(i * spriteSize + (inset / 2), j * spriteSize + inset);
+        ctx.lineTo(i * spriteSize + (spriteSize - inset), j * spriteSize + inset);
+        ctx.lineTo(i * spriteSize + spriteSize, j * spriteSize);
         ctx.closePath();
         ctx.fill();
         ctx.fillStyle = aliveColorLeft;
         ctx.beginPath();
-        ctx.moveTo(i * 8, j * 8);
-        ctx.lineTo(i * 8 + 2, j * 8 + 1);
-        ctx.lineTo(i * 8 + 2, j * 8 + 6);
-        ctx.lineTo(i * 8, j * 8 + 8);
+        ctx.moveTo(i * spriteSize, j * spriteSize);
+        ctx.lineTo(i * spriteSize + inset, j * spriteSize + (inset / 2));
+        ctx.lineTo(i * spriteSize + inset, j * spriteSize + (spriteSize - inset));
+        ctx.lineTo(i * spriteSize, j * spriteSize + spriteSize);
         ctx.closePath();
         ctx.fill();
         if (addShadow) {
             ctx.fillStyle = '#000000';
             ctx.beginPath();
-            ctx.moveTo(i * 8, j * 8);
-            ctx.lineTo(i * 8 - 3, j * 8 - 2);
-            ctx.lineTo(i * 8 + 5, j * 8 - 2);
-            ctx.lineTo(i * 8 + 8, j * 8);
+            ctx.moveTo(i * spriteSize, j * spriteSize);
+            ctx.lineTo(i * spriteSize - inset, j * spriteSize - inset);
+            ctx.lineTo(i * spriteSize + (spriteSize - inset), j * spriteSize - inset);
+            ctx.lineTo(i * spriteSize + spriteSize, j * spriteSize);
             ctx.closePath();
             ctx.fill();
             ctx.fillStyle = '#666666';
             ctx.beginPath();
-            ctx.moveTo(i * 8, j * 8);
-            ctx.lineTo(i * 8 - 3, j * 8 - 2);
-            ctx.lineTo(i * 8 - 3, j * 8 + 6);
-            ctx.lineTo(i * 8, j * 8 + 8);
+            ctx.moveTo(i * spriteSize, j * spriteSize);
+            ctx.lineTo(i * spriteSize - inset, j * spriteSize - inset);
+            ctx.lineTo(i * spriteSize - inset, j * spriteSize + (spriteSize - inset));
+            ctx.lineTo(i * spriteSize, j * spriteSize + spriteSize);
             ctx.closePath();
             ctx.fill();
         }
     };
-    Drawing.drawOutlineSquare = function (ctx, i, j, outlineColor, outlineColorTop, outlineColorLeft) {
+    Drawing.drawOutlineSquare = function (ctx, i, j, spriteSize, outlineColor, outlineColorTop, outlineColorLeft) {
+        var inset = spriteSize * 0.2;
         ctx.fillStyle = outlineColor;
-        ctx.fillRect(i * 8, j * 8, 8, 8);
+        ctx.fillRect(i * spriteSize, j * spriteSize, spriteSize, spriteSize);
         ctx.fillStyle = outlineColorTop;
         ctx.beginPath();
-        ctx.moveTo(i * 8, j * 8);
-        ctx.lineTo(i * 8 + 1, j * 8 + 2);
-        ctx.lineTo(i * 8 + 6, j * 8 + 2);
-        ctx.lineTo(i * 8 + 8, j * 8);
+        ctx.moveTo(i * spriteSize, j * spriteSize);
+        ctx.lineTo(i * spriteSize + (inset / 2), j * spriteSize + inset);
+        ctx.lineTo(i * spriteSize + (spriteSize - inset), j * spriteSize + inset);
+        ctx.lineTo(i * spriteSize + spriteSize, j * spriteSize);
         ctx.closePath();
         ctx.fill();
         ctx.fillStyle = outlineColorLeft;
         ctx.beginPath();
-        ctx.moveTo(i * 8, j * 8);
-        ctx.lineTo(i * 8 + 2, j * 8 + 1);
-        ctx.lineTo(i * 8 + 2, j * 8 + 6);
-        ctx.lineTo(i * 8, j * 8 + 8);
+        ctx.moveTo(i * spriteSize, j * spriteSize);
+        ctx.lineTo(i * spriteSize + inset, j * spriteSize + (inset / 2));
+        ctx.lineTo(i * spriteSize + inset, j * spriteSize + (spriteSize - inset));
+        ctx.lineTo(i * spriteSize, j * spriteSize + spriteSize);
         ctx.closePath();
         ctx.fill();
     };
-    Drawing.generateCanvas = function () {
+    Drawing.generateCanvas = function (spriteSize) {
         var spriteContainer = document.createElement("canvas");
         spriteContainer.classList.add("sprite");
-        spriteContainer.width = 64;
-        spriteContainer.height = 64;
+        spriteContainer.width = spriteSize * spriteSize;
+        spriteContainer.height = spriteSize * spriteSize;
         return spriteContainer;
     };
     Drawing.getRandomColor = function () {
@@ -144,40 +146,46 @@ var Drawing = (function () {
 var Start = (function () {
     function Start() {
     }
-    Start.generateSprites = function (spriteAmount, containerId, addShadow, spriteGeneratorFunction) {
+    Start.generateSprites = function (renderOptions, containerId, spriteGeneratorFunction) {
         var spritesContainer = document.getElementById(containerId);
         spritesContainer.innerHTML = '';
         var rowColor = Drawing.getRandomColor();
-        for (var index = 0; index < spriteAmount; index++) {
-            var spriteContainer = Drawing.generateCanvas();
+        for (var index = 0; index < renderOptions.spriteAmount; index++) {
+            var spriteContainer = Drawing.generateCanvas(renderOptions.spriteSize);
             spritesContainer.appendChild(spriteContainer);
             var sprite = spriteGeneratorFunction();
-            Drawing.drawSprite(sprite, spriteContainer, addShadow, rowColor);
+            Drawing.drawSprite(sprite, spriteContainer, renderOptions.addShadow, renderOptions.spriteSize, rowColor);
         }
     };
     Start.generateAndRenderSprites = function (addShadow) {
         var spriteSize = 8;
-        Start.generateSprites(10, "just-noise-sprites-50p", addShadow, function () { return NoiseGenerator.generateSprite(spriteSize); });
-        Start.generateSprites(10, "just-noise-sprites-25p", addShadow, function () { return NoiseGenerator.generateSprite(spriteSize, 25); });
-        Start.generateSprites(10, "noise-with-outline-sprites-50p", addShadow, function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }); });
-        Start.generateSprites(10, "noise-with-outline-sprites-25p", addShadow, function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
-        Start.generateSprites(10, "noise-with-outline-sprites-10p", addShadow, function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 10); }); });
-        Start.generateSprites(10, "cellular-automata-1-2gen-50p", addShadow, function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }); });
-        Start.generateSprites(10, "cellular-automata-1-5gen-50p", addShadow, function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }, 5); });
-        Start.generateSprites(10, "cellular-automata-1-2gen-25p", addShadow, function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
-        Start.generateSprites(10, "cellular-automata-1-5gen-25p", addShadow, function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); });
-        Start.generateSprites(10, "cellular-automata-1-2gen-25p-outline", addShadow, function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); }); });
-        Start.generateSprites(10, "cellular-automata-1-5gen-25p-outline", addShadow, function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); }); });
-        Start.generateSprites(10, "cellular-automata-2-2gen-50p", addShadow, function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
-        Start.generateSprites(10, "cellular-automata-2-5gen-50p", addShadow, function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); });
-        Start.generateSprites(10, "cellular-automata-2-2gen-25p", addShadow, function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
-        Start.generateSprites(10, "cellular-automata-2-5gen-25p", addShadow, function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); });
-        Start.generateSprites(10, "cellular-automata-2-2gen-25p-outline", addShadow, function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); }); });
-        Start.generateSprites(10, "cellular-automata-2-5gen-25p-outline", addShadow, function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); }); });
+        var spriteAmount = 10;
+        var renderOptions = {
+            spriteAmount: spriteAmount,
+            spriteSize: spriteSize,
+            addShadow: addShadow
+        };
+        Start.generateSprites(renderOptions, "just-noise-sprites-50p", function () { return NoiseGenerator.generateSprite(spriteSize); });
+        Start.generateSprites(renderOptions, "just-noise-sprites-25p", function () { return NoiseGenerator.generateSprite(spriteSize, 25); });
+        Start.generateSprites(renderOptions, "noise-with-outline-sprites-50p", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }); });
+        Start.generateSprites(renderOptions, "noise-with-outline-sprites-25p", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
+        Start.generateSprites(renderOptions, "noise-with-outline-sprites-10p", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 10); }); });
+        Start.generateSprites(renderOptions, "cellular-automata-1-2gen-50p", function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }); });
+        Start.generateSprites(renderOptions, "cellular-automata-1-5gen-50p", function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }, 5); });
+        Start.generateSprites(renderOptions, "cellular-automata-1-2gen-25p", function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
+        Start.generateSprites(renderOptions, "cellular-automata-1-5gen-25p", function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); });
+        Start.generateSprites(renderOptions, "cellular-automata-1-2gen-25p-outline", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); }); });
+        Start.generateSprites(renderOptions, "cellular-automata-1-5gen-25p-outline", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); }); });
+        Start.generateSprites(renderOptions, "cellular-automata-2-2gen-50p", function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
+        Start.generateSprites(renderOptions, "cellular-automata-2-5gen-50p", function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); });
+        Start.generateSprites(renderOptions, "cellular-automata-2-2gen-25p", function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); });
+        Start.generateSprites(renderOptions, "cellular-automata-2-5gen-25p", function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); });
+        Start.generateSprites(renderOptions, "cellular-automata-2-2gen-25p-outline", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }); }); });
+        Start.generateSprites(renderOptions, "cellular-automata-2-5gen-25p-outline", function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, 25); }, 5); }); });
         var randomAliveChange = Math.floor(Math.random() * 100);
         var randomGenerations = Math.floor(Math.random() * 50);
-        Start.generateSprites(10, "cellular-automata-1-random", addShadow, function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, randomAliveChange); }, randomGenerations); });
-        Start.generateSprites(10, "cellular-automata-2-random", addShadow, function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, randomAliveChange); }, randomGenerations); });
+        Start.generateSprites(renderOptions, "cellular-automata-1-random", function () { return CellularAutomataGenerator1.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, randomAliveChange); }, randomGenerations); });
+        Start.generateSprites(renderOptions, "cellular-automata-2-random", function () { return CellularAutomataGenerator2.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize, randomAliveChange); }, randomGenerations); });
     };
     return Start;
 }());
@@ -278,7 +286,7 @@ var NoiseGenerator = (function () {
                 halfSprite[i][j] = Math.floor(Math.random() * 100) > (100 - chanceForAliveCell - 1) ? CELLSTATE.ALIVE : CELLSTATE.DEAD;
             }
         }
-        var sprite = new Array(8);
+        var sprite = new Array(spriteSize);
         for (var i = 0; i < halfSprite.length; i++) {
             sprite[i] = halfSprite[i];
         }
