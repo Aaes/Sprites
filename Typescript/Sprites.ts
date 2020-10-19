@@ -17,9 +17,8 @@ class Start {
         }               
     } 
 
-    public static generateAndRenderSprites() {
+    public static generateAndRenderSprites(addShadow: boolean) {
         let spriteSize = 8;
-        let addShadow = false;
 
         // Just noise
         Start.generateSprites(10, "just-noise-sprites-50p", addShadow, () => NoiseGenerator.generateSprite(spriteSize));
@@ -64,6 +63,6 @@ class Start {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function(event) { 
-    Start.generateAndRenderSprites()
+document.addEventListener("DOMContentLoaded", function(event) {   
+    Start.generateAndRenderSprites(false)
 });

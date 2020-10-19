@@ -155,9 +155,8 @@ var Start = (function () {
             Drawing.drawSprite(sprite, spriteContainer, addShadow, rowColor);
         }
     };
-    Start.generateAndRenderSprites = function () {
+    Start.generateAndRenderSprites = function (addShadow) {
         var spriteSize = 8;
-        var addShadow = false;
         Start.generateSprites(10, "just-noise-sprites-50p", addShadow, function () { return NoiseGenerator.generateSprite(spriteSize); });
         Start.generateSprites(10, "just-noise-sprites-25p", addShadow, function () { return NoiseGenerator.generateSprite(spriteSize, 25); });
         Start.generateSprites(10, "noise-with-outline-sprites-50p", addShadow, function () { return NoiseWithOutlineGenerator.generateSprite(spriteSize, function () { return NoiseGenerator.generateSprite(spriteSize); }); });
@@ -183,7 +182,7 @@ var Start = (function () {
     return Start;
 }());
 document.addEventListener("DOMContentLoaded", function (event) {
-    Start.generateAndRenderSprites();
+    Start.generateAndRenderSprites(false);
 });
 var Utility = (function () {
     function Utility() {
