@@ -1,6 +1,10 @@
 ## Sprite generation
-
 Generation and rending of retro style sprites with different approaches. A fun little hobby project.
+
+![alt text](./Images/dots-sprite.png "Dots sprite")
+![alt text](./Images/sprite.png "Sprite with outline")
+![alt text](./Images/gradient-sprite.png "Gradient sprite")
+![alt text](./Images/shadows-sprite.png "Shadow sprtie")
 
 ![alt text](./Images/JustNoise.png "Just noise")
 ![alt text](./Images/NoiseWithOutline.png "Noise with outline")
