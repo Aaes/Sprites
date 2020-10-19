@@ -38,7 +38,7 @@ var CellularAutomataUtilty = (function () {
 var Drawing = (function () {
     function Drawing() {
     }
-    Drawing.drawSprite = function (sprite, canvas, addShadow, spriteSize, color) {
+    Drawing.drawSprite = function (sprite, canvas, addShadow, addGradient, spriteSize, color) {
         var ctx = canvas.getContext("2d");
         var aliveColor;
         if (color) {
@@ -55,16 +55,19 @@ var Drawing = (function () {
         for (var i = 0; i < sprite.length; i++) {
             for (var j = 0; j < sprite.length; j++) {
                 if (sprite[i][j] == CELLSTATE.ALIVE) {
-                    Drawing.drawNormalSquare(ctx, i, j, spriteSize, aliveColor, aliveColorTop, aliveColorLeft, addShadow);
+                    Drawing.drawNormalSquare(ctx, i, j, spriteSize, aliveColor, aliveColorTop, aliveColorLeft, addShadow, addGradient);
                 }
                 if (sprite[i][j] == CELLSTATE.OUTLINE) {
-                    Drawing.drawOutlineSquare(ctx, i, j, spriteSize, outlineColor, outlineColorTop, outlineColorLeft);
+                    Drawing.drawOutlineSquare(ctx, i, j, spriteSize, outlineColor, outlineColorTop, outlineColorLeft, addGradient);
                 }
             }
         }
     };
-    Drawing.drawNormalSquare = function (ctx, i, j, spriteSize, aliveColor, aliveColorTop, aliveColorLeft, addShadow) {
-        ctx.fillStyle = aliveColor;
+    Drawing.drawNormalSquare = function (ctx, i, j, spriteSize, aliveColor, aliveColorTop, aliveColorLeft, addShadow, addGradient) {
+        if (addGradient)
+            ctx.fillStyle = this.adjust(aliveColor, i * -20);
+        else
+            ctx.fillStyle = aliveColor;
         var inset = spriteSize * 0.2;
         ctx.fillRect(i * spriteSize, j * spriteSize, spriteSize, spriteSize);
         ctx.fillStyle = aliveColorTop;
@@ -102,9 +105,12 @@ var Drawing = (function () {
             ctx.fill();
         }
     };
-    Drawing.drawOutlineSquare = function (ctx, i, j, spriteSize, outlineColor, outlineColorTop, outlineColorLeft) {
+    Drawing.drawOutlineSquare = function (ctx, i, j, spriteSize, outlineColor, outlineColorTop, outlineColorLeft, addGradient) {
         var inset = spriteSize * 0.2;
-        ctx.fillStyle = outlineColor;
+        if (addGradient)
+            ctx.fillStyle = this.adjust(outlineColor, i * -20);
+        else
+            ctx.fillStyle = outlineColor;
         ctx.fillRect(i * spriteSize, j * spriteSize, spriteSize, spriteSize);
         ctx.fillStyle = outlineColorTop;
         ctx.beginPath();
@@ -154,16 +160,22 @@ var Start = (function () {
             var spriteContainer = Drawing.generateCanvas(renderOptions.spriteSize);
             spritesContainer.appendChild(spriteContainer);
             var sprite = spriteGeneratorFunction();
-            Drawing.drawSprite(sprite, spriteContainer, renderOptions.addShadow, renderOptions.spriteSize, rowColor);
+            Drawing.drawSprite(sprite, spriteContainer, renderOptions.addShadow, renderOptions.addGradient, renderOptions.spriteSize, rowColor);
         }
     };
-    Start.generateAndRenderSprites = function (addShadow) {
+    Start.renderWithOptions = function () {
+        var addShadowCheckbox = document.getElementById('add-shadow-checkbox');
+        var addGradientCheckbox = document.getElementById('add-gradient-checkbox');
+        Start.generateAndRenderSprites(addShadowCheckbox.checked, addGradientCheckbox.checked);
+    };
+    Start.generateAndRenderSprites = function (addShadow, addGradient) {
         var spriteSize = 8;
         var spriteAmount = 10;
         var renderOptions = {
             spriteAmount: spriteAmount,
             spriteSize: spriteSize,
-            addShadow: addShadow
+            addShadow: addShadow,
+            addGradient: addGradient
         };
         Start.generateSprites(renderOptions, "just-noise-sprites-50p", function () { return NoiseGenerator.generateSprite(spriteSize); });
         Start.generateSprites(renderOptions, "just-noise-sprites-25p", function () { return NoiseGenerator.generateSprite(spriteSize, 25); });
@@ -190,7 +202,7 @@ var Start = (function () {
     return Start;
 }());
 document.addEventListener("DOMContentLoaded", function (event) {
-    Start.generateAndRenderSprites(false);
+    Start.generateAndRenderSprites(false, false);
 });
 var Utility = (function () {
     function Utility() {

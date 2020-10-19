@@ -4,7 +4,8 @@ class Start {
             { 
                 spriteAmount: number, 
                 spriteSize: number,                 
-                addShadow: boolean
+                addShadow: boolean,
+                addGradient: boolean
             }, 
             containerId: string,
             spriteGeneratorFunction: (() => CELLSTATE[][])) {
@@ -22,17 +23,24 @@ class Start {
             let sprite = spriteGeneratorFunction();
 
             // Draw the sprite
-            Drawing.drawSprite(sprite, spriteContainer, renderOptions.addShadow, renderOptions.spriteSize, rowColor);
+            Drawing.drawSprite(sprite, spriteContainer, renderOptions.addShadow,  renderOptions.addGradient, renderOptions.spriteSize, rowColor);
         }               
     } 
 
-    public static generateAndRenderSprites(addShadow: boolean) {
+    public static renderWithOptions() {
+        let addShadowCheckbox = <HTMLInputElement> document.getElementById('add-shadow-checkbox');
+        let addGradientCheckbox = <HTMLInputElement> document.getElementById('add-gradient-checkbox');
+        Start.generateAndRenderSprites(addShadowCheckbox.checked, addGradientCheckbox.checked)
+    }
+
+    public static generateAndRenderSprites(addShadow: boolean, addGradient: boolean) {
         let spriteSize = 8;
         let spriteAmount = 10
         let renderOptions = {
             spriteAmount,
             spriteSize,
-            addShadow
+            addShadow,
+            addGradient
         }
 
         // Just noise
@@ -79,5 +87,5 @@ class Start {
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {   
-    Start.generateAndRenderSprites(false)
+    Start.generateAndRenderSprites(false, false)
 });

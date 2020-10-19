@@ -6,8 +6,11 @@
     <body>
         <div class="container"> 
             <h1>Procedurally generated sprites</h1>
-            <input type="checkbox" id="add-shadow-checkbox" onclick='Start.generateAndRenderSprites(this.checked)'/>
+
+            <input type="checkbox" id="add-shadow-checkbox" onclick='Start.renderWithOptions()'/>
             <label for="add-shadow-checkbox">Add shadow</label><br>
+            <input type="checkbox" id="add-gradient-checkbox" onclick='Start.renderWithOptions()'/>
+            <label for="add-shadow-checkbox">Add gradient</label><br>
             <!-- Just noise -->
             <div class="row">
                 <div class="col-small">

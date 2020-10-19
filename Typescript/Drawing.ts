@@ -1,5 +1,12 @@
 class Drawing {
-    public static drawSprite(sprite: Array<Array<CELLSTATE>>, canvas: HTMLCanvasElement, addShadow: boolean, spriteSize: number, color?: string): void {
+    public static drawSprite(
+        sprite: Array<Array<CELLSTATE>>, 
+        canvas: HTMLCanvasElement, 
+        addShadow: boolean, 
+        addGradient: boolean,
+        spriteSize: number, 
+        color?: string): void {
+        
         let ctx = canvas.getContext("2d");
         let aliveColor: string;       
 
@@ -20,10 +27,10 @@ class Drawing {
         for (let i = 0; i < sprite.length; i++) {
             for (let j = 0; j < sprite.length; j++) {
                 if(sprite[i][j] == CELLSTATE.ALIVE) {
-                    Drawing.drawNormalSquare(ctx, i, j, spriteSize, aliveColor, aliveColorTop, aliveColorLeft, addShadow)
+                    Drawing.drawNormalSquare(ctx, i, j, spriteSize, aliveColor, aliveColorTop, aliveColorLeft, addShadow, addGradient)
                 }
                 if(sprite[i][j] == CELLSTATE.OUTLINE) {
-                    Drawing.drawOutlineSquare(ctx, i, j, spriteSize, outlineColor, outlineColorTop, outlineColorLeft)
+                    Drawing.drawOutlineSquare(ctx, i, j, spriteSize, outlineColor, outlineColorTop, outlineColorLeft, addGradient)
                 }
             }
         }
@@ -37,8 +44,13 @@ class Drawing {
         aliveColor: string,
         aliveColorTop: string,
         aliveColorLeft: string,
-        addShadow: boolean){
-        ctx.fillStyle = aliveColor;
+        addShadow: boolean,
+        addGradient: boolean){
+
+        if(addGradient)
+            ctx.fillStyle = this.adjust(aliveColor, i*-20);
+        else  
+            ctx.fillStyle = aliveColor;
 
         let inset = spriteSize * 0.2
 
@@ -95,10 +107,14 @@ class Drawing {
         spriteSize: number,
         outlineColor: string, 
         outlineColorTop: string, 
-        outlineColorLeft: string) {
+        outlineColorLeft: string,
+        addGradient: boolean) {
 
         let inset = spriteSize * 0.2
-        ctx.fillStyle = outlineColor;
+        if(addGradient)        
+            ctx.fillStyle = this.adjust(outlineColor, i*-20);
+        else 
+            ctx.fillStyle = outlineColor;
 
         // Fill color
         ctx.fillRect(i*spriteSize, j*spriteSize, spriteSize, spriteSize); 
