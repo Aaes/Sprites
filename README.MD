@@ -23,13 +23,15 @@ The project uses Typescript so if you want to extend it, you can
 - Experimentation with different randomness algorithms
 - Experimentation with more cellular automata
 - UI for tweaking the alive cell change, generation count and sprite size
-- UI for seleting whether to render with an outline
+- UI for selecting whether to render with an outline
 - Separate rendering from the generation so that selecting checkboxes doesn't trigger regeneration
 
 ## Based on ideas by
 
-<a href="https://github.com/yurkth/sprator">Yurkth</a>
+<a href="https://github.com/yurkth/sprator">Yurkth</a> - original idea for sprite generation 
 <br/>
-<a href="https://github.com/markuszeller/avatarro">Avatarro</a>
+<a href="https://github.com/markuszeller/avatarro">Avatarro</a> - sprites just using noise with outlines
 <br/>
-<a href="https://imgur.com/gallery/QJjdAPh">Iamtheonlymeiknow</a>
+<a href="https://imgur.com/gallery/QJjdAPh">Iamtheonlymeiknow</a> - shading of the squares
+<br/>
+<a href="https://ljvmiranda921.github.io/projects/2020/03/31/cellular-sprites/">LJ MIRANDA</a> - sprites with conways game of life
