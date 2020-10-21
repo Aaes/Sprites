@@ -1,4 +1,4 @@
-class CellularAutomataGenerator1 {
+class ConwaysGameOfLife {
     public static generateSprite(spriteSize: number, spriteGenerator:((spritesize: number) => CELLSTATE[][]), generations: number = 2): CELLSTATE[][] {
         let sprite = spriteGenerator(spriteSize);
 

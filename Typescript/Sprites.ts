@@ -56,36 +56,36 @@ class Start {
         Start.generateSprites(renderOptions, "noise-with-outline-sprites-10p", () => NoiseWithOutlineGenerator.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 10)));
     
         // Cellular Automata 1
-        Start.generateSprites(renderOptions, "cellular-automata-1-2gen-50p", () => CellularAutomataGenerator1.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize)));
-        Start.generateSprites(renderOptions, "cellular-automata-1-5gen-50p", () => CellularAutomataGenerator1.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize), 5));
+        Start.generateSprites(renderOptions, "cellular-automata-1-2gen-50p", () => ConwaysGameOfLife.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize)));
+        Start.generateSprites(renderOptions, "cellular-automata-1-5gen-50p", () => ConwaysGameOfLife.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize), 5));
 
-        Start.generateSprites(renderOptions, "cellular-automata-1-2gen-25p", () => CellularAutomataGenerator1.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25)));
-        Start.generateSprites(renderOptions, "cellular-automata-1-5gen-25p", () => CellularAutomataGenerator1.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25), 5));
+        Start.generateSprites(renderOptions, "cellular-automata-1-2gen-25p", () => ConwaysGameOfLife.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25)));
+        Start.generateSprites(renderOptions, "cellular-automata-1-5gen-25p", () => ConwaysGameOfLife.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25), 5));
     
         // Cellular Automata 1 with outline
         Start.generateSprites(renderOptions, "cellular-automata-1-2gen-25p-outline", () => NoiseWithOutlineGenerator.generateSprite(spriteSize, 
-            () => CellularAutomataGenerator1.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25))));
+            () => ConwaysGameOfLife.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25))));
         Start.generateSprites(renderOptions, "cellular-automata-1-5gen-25p-outline", () => NoiseWithOutlineGenerator.generateSprite(spriteSize, 
-            () => CellularAutomataGenerator1.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25), 5)));
+            () => ConwaysGameOfLife.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25), 5)));
     
         // Cellular Automata 2
-        Start.generateSprites(renderOptions, "cellular-automata-2-2gen-50p", () => CellularAutomataGenerator2.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25)));
-        Start.generateSprites(renderOptions, "cellular-automata-2-5gen-50p", () => CellularAutomataGenerator2.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25), 5));
+        Start.generateSprites(renderOptions, "cellular-automata-2-2gen-50p", () => ConwaysGameOfLifeDiagonals.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25)));
+        Start.generateSprites(renderOptions, "cellular-automata-2-5gen-50p", () => ConwaysGameOfLifeDiagonals.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25), 5));
     
-        Start.generateSprites(renderOptions, "cellular-automata-2-2gen-25p", () => CellularAutomataGenerator2.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25)));
-        Start.generateSprites(renderOptions, "cellular-automata-2-5gen-25p", () => CellularAutomataGenerator2.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25), 5));
+        Start.generateSprites(renderOptions, "cellular-automata-2-2gen-25p", () => ConwaysGameOfLifeDiagonals.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25)));
+        Start.generateSprites(renderOptions, "cellular-automata-2-5gen-25p", () => ConwaysGameOfLifeDiagonals.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25), 5));
     
         // Cellular Automata 2 with outline
         Start.generateSprites(renderOptions, "cellular-automata-2-2gen-25p-outline", () => NoiseWithOutlineGenerator.generateSprite(spriteSize, 
-            () => CellularAutomataGenerator2.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25))));
+            () => ConwaysGameOfLifeDiagonals.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25))));
         Start.generateSprites(renderOptions, "cellular-automata-2-5gen-25p-outline", () => NoiseWithOutlineGenerator.generateSprite(spriteSize, 
-            () => CellularAutomataGenerator2.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25), 5)));
+            () => ConwaysGameOfLifeDiagonals.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, 25), 5)));
     
         // Random cellular automata
         let randomAliveChange = Math.floor(Math.random() * 100);
         let randomGenerations = Math.floor(Math.random() * 50);
-        Start.generateSprites(renderOptions, "cellular-automata-1-random", () => CellularAutomataGenerator1.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, randomAliveChange), randomGenerations));
-        Start.generateSprites(renderOptions, "cellular-automata-2-random", () => CellularAutomataGenerator2.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, randomAliveChange), randomGenerations));
+        Start.generateSprites(renderOptions, "cellular-automata-1-random", () => ConwaysGameOfLife.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, randomAliveChange), randomGenerations));
+        Start.generateSprites(renderOptions, "cellular-automata-2-random", () => ConwaysGameOfLifeDiagonals.generateSprite(spriteSize, () => NoiseGenerator.generateSprite(spriteSize, randomAliveChange), randomGenerations));
     }
 }
 
