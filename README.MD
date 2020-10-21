@@ -22,9 +22,10 @@ The project uses Typescript so if you want to extend it, you can
 - Better explanations of the methods used
 - Experimentation with different randomness algorithms
 - Experimentation with more cellular automata
-- UI for tweaking the alive cell change, generation count and sprite size
+- UI for tweaking the alive cell chance, generation count and sprite size
 - UI for selecting whether to render with an outline
 - Separate rendering from the generation so that selecting checkboxes doesn't trigger regeneration
+- Incorporate the 'spaceship' method (with masks) from <a href="http://web.archive.org/web/20080228054410/http://www.davebollinger.com/works/pixelspaceships/">Dave Bollinger</a> and <a href="https://github.com/zfedoran/pixel-sprite-generator">zfedoran</a> (maybe looking at seiyrias <a href="https://github.com/seiyria/mixel">mixel</a>)
 
 ## Based on ideas by
 
