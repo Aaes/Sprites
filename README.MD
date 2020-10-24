@@ -1,5 +1,6 @@
 ## Sprite generation
 Generation and rending of retro style sprites with different approaches. A fun little hobby project.
+You can view the results at https://aaes.github.io/Sprites/index.html.
 
 ![alt text](./Images/JustNoise.png "Just noise")
 ![alt text](./Images/NoiseWithOutline.png "Noise with outline")
