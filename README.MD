@@ -15,8 +15,8 @@ Generation and rending of retro style sprites with different approaches. A fun l
 Clone the repository and open the "sprites.html" file.
 The project uses Typescript so if you want to extend it, you can
 - Install typescript (https://code.visualstudio.com/docs/typescript/typescript-compiling)
-- open the project folder and run "tsc -b" (use "tsc -w" for watch mode)
-- open the sprites.html file
+- Open the project folder and run "tsc -b" (use "tsc -w" for watch mode)
+- Open the index.html file
 
 ## Further improvements
 - Better explanations of the methods used
